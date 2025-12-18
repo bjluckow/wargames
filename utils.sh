@@ -6,7 +6,7 @@ begin() {
 
   host="bandit.labs.overthewire.org"
   port=2220
-  out="$lvl"
+  out="$lvl.raw"
 
   if [ -e "$out" ]; then
     echo "output file already exists: $out" >&2
@@ -46,3 +46,37 @@ lastpw() {
   printf "%s" "$pw" | pbcopy
   echo "copied last password from $secrets_file"
 }
+
+cmdsof() {
+  in="${1:?usage: summarize <file.raw> [out.log]}"
+  out="${2:-}"
+
+  [ -f "$in" ] || { echo "missing: $in" >&2; return 2; }
+
+  # Prints commands to stdout, or writes to out if provided
+  cmd_stream() {
+    perl -pe '
+      s/\r/\n/g;
+      s/\e\[[0-9;?]*[ -\/]*[@-~]//g;      # CSI escapes
+      s/\e\][^\a]*(\a|\e\\)//g;           # OSC escapes
+    ' -- "$in" |
+    col -bx 2>/dev/null |
+    awk '
+      # match typical bash prompts: "...$ " or "...# "
+      /[$#][[:space:]]/ {
+        line=$0
+        sub(/^.*[$#][[:space:]]+/, "", line)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", line)
+        if (line != "" && line != "exit" && line != "logout") print line
+      }
+    '
+  }
+
+  if [ -n "$out" ]; then
+    cmd_stream >| "$out"
+    echo "wrote: $out"
+  else
+    cmd_stream
+  fi
+}
+

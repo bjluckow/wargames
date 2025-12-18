@@ -1,0 +1,821 @@
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit5@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+[?2004h]0;bandit5@bandit: ~[01;32mbandit5@bandit[00m:[01;34m~[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  .bash_logout  .bashrc  [01;34minhere[0m  .profile
+[?2004h]0;bandit5@bandit: ~[01;32mbandit5@bandit[00m:[01;34m~[00m$ cd inhere/
+[?2004l[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ ls -a
+[?2004l[0m[01;34m.[0m            [01;34mmaybehere01[0m  [01;34mmaybehere04[0m  [01;34mmaybehere07[0m  [01;34mmaybehere10[0m  [01;34mmaybehere13[0m  [01;34mmaybehere16[0m  [01;34mmaybehere19[0m
+[01;34m..[0m           [01;34mmaybehere02[0m  [01;34mmaybehere05[0m  [01;34mmaybehere08[0m  [01;34mmaybehere11[0m  [01;34mmaybehere14[0m  [01;34mmaybehere17[0m
+[01;34mmaybehere00[0m  [01;34mmaybehere03[0m  [01;34mmaybehere06[0m  [01;34mmaybehere09[0m  [01;34mmaybehere12[0m  [01;34mmaybehere15[0m  [01;34mmaybehere18[0m
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file ./*
+[?2004l./maybehere00: directory
+./maybehere01: directory
+./maybehere02: directory
+./maybehere03: directory
+./maybehere04: directory
+./maybehere05: directory
+./maybehere06: directory
+./maybehere07: directory
+./maybehere08: directory
+./maybehere09: directory
+./maybehere10: directory
+./maybehere11: directory
+./maybehere12: directory
+./maybehere13: directory
+./maybehere14: directory
+./maybehere15: directory
+./maybehere16: directory
+./maybehere17: directory
+./maybehere18: directory
+./maybehere19: directory
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ cd mab[Kybehere01
+[?2004l[?2004h]0;bandit5@bandit: ~/inhere/maybehere01[01;32mbandit5@bandit[00m:[01;34m~/inhere/maybehere01[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  [01;32m-file1[0m  [01;32m.file1[0m  -file2  .file2  [01;32m-file3[0m  [01;32m.file3[0m  [01;32mspaces file1[0m  spaces file2  [01;32mspaces file3[0m
+[?2004h]0;bandit5@bandit: ~/inhere/maybehere01[01;32mbandit5@bandit[00m:[01;34m~/inhere/maybehere01[00m$ cd ..
+[?2004l[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ du
+[?2004l52	./maybehere07
+68	./maybehere11
+52	./maybehere10
+76	./maybehere16
+60	./maybehere15
+68	./maybehere12
+72	./maybehere19
+60	./maybehere13
+52	./maybehere08
+68	./maybehere17
+64	./maybehere18
+56	./maybehere14
+56	./maybehere04
+72	./maybehere09
+76	./maybehere01
+68	./maybehere00
+60	./maybehere05
+64	./maybehere02
+76	./maybehere03
+60	./maybehere06
+1284	.
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ du -h
+[?2004l52K	./maybehere07
+68K	./maybehere11
+52K	./maybehere10
+76K	./maybehere16
+60K	./maybehere15
+68K	./maybehere12
+72K	./maybehere19
+60K	./maybehere13
+52K	./maybehere08
+68K	./maybehere17
+64K	./maybehere18
+56K	./maybehere14
+56K	./maybehere04
+72K	./maybehere09
+76K	./maybehere01
+68K	./maybehere00
+60K	./maybehere05
+64K	./maybehere02
+76K	./maybehere03
+60K	./maybehere06
+1.3M	.
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file */
+[?2004lmaybehere00/: directory
+maybehere01/: directory
+maybehere02/: directory
+maybehere03/: directory
+maybehere04/: directory
+maybehere05/: directory
+maybehere06/: directory
+maybehere07/: directory
+maybehere08/: directory
+maybehere09/: directory
+maybehere10/: directory
+maybehere11/: directory
+maybehere12/: directory
+maybehere13/: directory
+maybehere14/: directory
+maybehere15/: directory
+maybehere16/: directory
+maybehere17/: directory
+maybehere18/: directory
+maybehere19/: directory
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file */*
+[?2004lmaybehere00/-file1:       ASCII text, with very long lines (1038)
+maybehere00/-file2:       ASCII text, with very long lines (9387)
+maybehere00/-file3:       OpenPGP Secret Key
+maybehere00/spaces file1: ASCII text, with very long lines (6117)
+maybehere00/spaces file2: ASCII text, with very long lines (6849)
+maybehere00/spaces file3: data
+maybehere01/-file1:       ASCII text, with very long lines (6027)
+maybehere01/-file2:       ASCII text
+maybehere01/-file3:       data
+maybehere01/spaces file1: ASCII text, with very long lines (4138)
+maybehere01/spaces file2: ASCII text, with very long lines (4542)
+maybehere01/spaces file3: data
+maybehere02/-file1:       ASCII text, with very long lines (3800)
+maybehere02/-file2:       X1 archive data
+maybehere02/-file3:       data
+maybehere02/spaces file1: ASCII text, with very long lines (6745)
+maybehere02/spaces file2: ASCII text, with very long lines (8487)
+maybehere02/spaces file3: data
+maybehere03/-file1:       ASCII text, with very long lines (314)
+maybehere03/-file2:       ASCII text, with very long lines (6594)
+maybehere03/-file3:       data
+maybehere03/spaces file1: ASCII text, with very long lines (2189)
+maybehere03/spaces file2: ASCII text, with very long lines (3384)
+maybehere03/spaces file3: data
+maybehere04/-file1:       ASCII text, with very long lines (4409)
+maybehere04/-file2:       ASCII text, with very long lines (2618)
+maybehere04/-file3:       data
+maybehere04/spaces file1: ASCII text, with very long lines (5531)
+maybehere04/spaces file2: ASCII text, with very long lines (2490)
+maybehere04/spaces file3: data
+maybehere05/-file1:       ASCII text, with very long lines (2345)
+maybehere05/-file2:       ASCII text, with very long lines (5958)
+maybehere05/-file3:       OpenPGP Public Key
+maybehere05/spaces file1: ASCII text, with very long lines (879)
+maybehere05/spaces file2: ASCII text, with very long lines (2419)
+maybehere05/spaces file3: data
+maybehere06/-file1:       ASCII text, with very long lines (5730)
+maybehere06/-file2:       ASCII text, with very long lines (1075)
+maybehere06/-file3:       data
+maybehere06/spaces file1: ASCII text, with very long lines (4072)
+maybehere06/spaces file2: ASCII text, with very long lines (4250)
+maybehere06/spaces file3: data
+maybehere07/-file1:       ASCII text, with very long lines (3662)
+maybehere07/-file2:       ASCII text, with very long lines (2487)
+maybehere07/-file3:       data
+maybehere07/spaces file1: ASCII text, with very long lines (4129)
+maybehere07/spaces file2: ASCII text, with very long lines (9063)
+maybehere07/spaces file3: data
+maybehere08/-file1:       ASCII text, with very long lines (1076)
+maybehere08/-file2:       ASCII text, with very long lines (3824)
+maybehere08/-file3:       data
+maybehere08/spaces file1: ASCII text
+maybehere08/spaces file2: ASCII text, with very long lines (3692)
+maybehere08/spaces file3: data
+maybehere09/-file1:       ASCII text, with very long lines (3627)
+maybehere09/-file2:       ASCII text, with very long lines (773)
+maybehere09/-file3:       data
+maybehere09/spaces file1: ASCII text, with very long lines (5300)
+maybehere09/spaces file2: ASCII text, with very long lines (8715)
+maybehere09/spaces file3: data
+maybehere10/-file1:       ASCII text, with very long lines (1051)
+maybehere10/-file2:       ASCII text, with very long lines (1990)
+maybehere10/-file3:       data
+maybehere10/spaces file1: ASCII text, with very long lines (8268)
+maybehere10/spaces file2: ASCII text, with very long lines (3569)
+maybehere10/spaces file3: data
+maybehere11/-file1:       ASCII text, with very long lines (1210)
+maybehere11/-file2:       ASCII text, with very long lines (4558)
+maybehere11/-file3:       data
+maybehere11/spaces file1: ASCII text, with very long lines (3146)
+maybehere11/spaces file2: ASCII text, with very long lines (502)
+maybehere11/spaces file3: data
+maybehere12/-file1:       ASCII text, with very long lines (9677)
+maybehere12/-file2:       ASCII text
+maybehere12/-file3:       data
+maybehere12/spaces file1: ASCII text, with very long lines (2156)
+maybehere12/spaces file2: ASCII text, with very long lines (2459)
+maybehere12/spaces file3: data
+maybehere13/-file1:       ASCII text, with very long lines (1358)
+maybehere13/-file2:       ASCII text, with very long lines (1422)
+maybehere13/-file3:       data
+maybehere13/spaces file1: ASCII text, with very long lines (3951)
+maybehere13/spaces file2: ASCII text, with very long lines (951)
+maybehere13/spaces file3: data
+maybehere14/-file1:       ASCII text, with very long lines (4281)
+maybehere14/-file2:       ASCII text, with very long lines (8350)
+maybehere14/-file3:       OpenPGP Secret Key
+maybehere14/spaces file1: ASCII text, with very long lines (1381)
+maybehere14/spaces file2: ASCII text, with very long lines (870)
+maybehere14/spaces file3: data
+maybehere15/-file1:       ASCII text, with very long lines (8793)
+maybehere15/-file2:       ASCII text, with very long lines (9498)
+maybehere15/-file3:       data
+maybehere15/spaces file1: ASCII text, with very long lines (1622)
+maybehere15/spaces file2: ASCII text
+maybehere15/spaces file3: data
+maybehere16/-file1:       ASCII text, with very long lines (4276)
+maybehere16/-file2:       ASCII text, with very long lines (5300)
+maybehere16/-file3:       data
+maybehere16/spaces file1: ASCII text, with very long lines (9772)
+maybehere16/spaces file2: ASCII text, with very long lines (3145)
+maybehere16/spaces file3: data
+maybehere17/-file1:       ASCII text, with very long lines (1132)
+maybehere17/-file2:       ASCII text, with very long lines (1790)
+maybehere17/-file3:       data
+maybehere17/spaces file1: ASCII text, with very long lines (8360)
+maybehere17/spaces file2: ASCII text, with very long lines (3386)
+maybehere17/spaces file3: data
+maybehere18/-file1:       ASCII text, with very long lines (9696)
+maybehere18/-file2:       ASCII text
+maybehere18/-file3:       data
+maybehere18/spaces file1: ASCII text, with very long lines (7333)
+maybehere18/spaces file2: ASCII text, with very long lines (6347)
+maybehere18/spaces file3: data
+maybehere19/-file1:       ASCII text, with very long lines (6301)
+maybehere19/-file2:       ASCII text, with very long lines (5593)
+maybehere19/-file3:       data
+maybehere19/spaces file1: ASCII text, with very long lines (7185)
+maybehere19/spaces file2: ASCII text, with very long lines (8784)
+maybehere19/spaces file3: data
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file */*[K{}.},}[C*
+[?2004lmaybehere00/.file1:       ASCII text, with very long lines (550)
+maybehere00/.file2:       ASCII text, with very long lines (7835)
+maybehere00/.file3:       data
+maybehere01/.file1:       Clarion Developer (v2 and above) memo data
+maybehere01/.file2:       ASCII text, with very long lines (3069)
+maybehere01/.file3:       data
+maybehere02/.file1:       ASCII text, with very long lines (6350)
+maybehere02/.file2:       ASCII text, with very long lines (2576)
+maybehere02/.file3:       data
+maybehere03/.file1:       ASCII text, with very long lines (9768)
+maybehere03/.file2:       ASCII text, with very long lines (8879)
+maybehere03/.file3:       data
+maybehere04/.file1:       ASCII text, with very long lines (2439)
+maybehere04/.file2:       ASCII text, with very long lines (6143)
+maybehere04/.file3:       data
+maybehere05/.file1:       ASCII text, with very long lines (3200)
+maybehere05/.file2:       ASCII text, with very long lines (5916)
+maybehere05/.file3:       data
+maybehere06/.file1:       ASCII text, with very long lines (1270)
+maybehere06/.file2:       ASCII text, with very long lines (8975)
+maybehere06/.file3:       data
+maybehere07/.file1:       ASCII text, with very long lines (3064)
+maybehere07/.file2:       ASCII text, with very long lines (1000)
+maybehere07/.file3:       OpenPGP Public Key
+maybehere08/.file1:       ASCII text, with very long lines (8168)
+maybehere08/.file2:       ASCII text, with very long lines (746)
+maybehere08/.file3:       data
+maybehere09/.file1:       ASCII text, with very long lines (6762)
+maybehere09/.file2:       ASCII text, with very long lines (8516)
+maybehere09/.file3:       data
+maybehere10/.file1:       ASCII text, with very long lines (7091)
+maybehere10/.file2:       ASCII text
+maybehere10/.file3:       data
+maybehere11/.file1:       ASCII text, with very long lines (451)
+maybehere11/.file2:       ASCII text, with very long lines (2500)
+maybehere11/.file3:       data
+maybehere12/.file1:       ASCII text, with very long lines (5814)
+maybehere12/.file2:       ASCII text, with very long lines (8243)
+maybehere12/.file3:       data
+maybehere13/.file1:       ASCII text, with very long lines (5257)
+maybehere13/.file2:       ASCII text, with very long lines (8951)
+maybehere13/.file3:       data
+maybehere14/.file1:       ASCII text, with very long lines (3426)
+maybehere14/.file2:       ASCII text, with very long lines (1502)
+maybehere14/.file3:       data
+maybehere15/.file1:       ASCII text, with very long lines (2158)
+maybehere15/.file2:       ASCII text
+maybehere15/.file3:       data
+maybehere16/.file1:       ASCII text, with very long lines (5425)
+maybehere16/.file2:       ASCII text, with very long lines (8471)
+maybehere16/.file3:       DOS executable (COM), start instruction 0x8cfa2314 44ee920f
+maybehere17/.file1:       ASCII text, with very long lines (894)
+maybehere17/.file2:       ASCII text, with very long lines (8340)
+maybehere17/.file3:       data
+maybehere18/.file1:       ASCII text, with very long lines (5701)
+maybehere18/.file2:       ASCII text, with very long lines (2083)
+maybehere18/.file3:       data
+maybehere19/.file1:       ASCII text, with very long lines (7208)
+maybehere19/.file2:       ASCII text, with very long lines (4739)
+maybehere19/.file3:       Dyalog APL version -115.21
+maybehere00/-file1:       ASCII text, with very long lines (1038)
+maybehere00/-file2:       ASCII text, with very long lines (9387)
+maybehere00/-file3:       OpenPGP Secret Key
+maybehere00/spaces file1: ASCII text, with very long lines (6117)
+maybehere00/spaces file2: ASCII text, with very long lines (6849)
+maybehere00/spaces file3: data
+maybehere01/-file1:       ASCII text, with very long lines (6027)
+maybehere01/-file2:       ASCII text
+maybehere01/-file3:       data
+maybehere01/spaces file1: ASCII text, with very long lines (4138)
+maybehere01/spaces file2: ASCII text, with very long lines (4542)
+maybehere01/spaces file3: data
+maybehere02/-file1:       ASCII text, with very long lines (3800)
+maybehere02/-file2:       X1 archive data
+maybehere02/-file3:       data
+maybehere02/spaces file1: ASCII text, with very long lines (6745)
+maybehere02/spaces file2: ASCII text, with very long lines (8487)
+maybehere02/spaces file3: data
+maybehere03/-file1:       ASCII text, with very long lines (314)
+maybehere03/-file2:       ASCII text, with very long lines (6594)
+maybehere03/-file3:       data
+maybehere03/spaces file1: ASCII text, with very long lines (2189)
+maybehere03/spaces file2: ASCII text, with very long lines (3384)
+maybehere03/spaces file3: data
+maybehere04/-file1:       ASCII text, with very long lines (4409)
+maybehere04/-file2:       ASCII text, with very long lines (2618)
+maybehere04/-file3:       data
+maybehere04/spaces file1: ASCII text, with very long lines (5531)
+maybehere04/spaces file2: ASCII text, with very long lines (2490)
+maybehere04/spaces file3: data
+maybehere05/-file1:       ASCII text, with very long lines (2345)
+maybehere05/-file2:       ASCII text, with very long lines (5958)
+maybehere05/-file3:       OpenPGP Public Key
+maybehere05/spaces file1: ASCII text, with very long lines (879)
+maybehere05/spaces file2: ASCII text, with very long lines (2419)
+maybehere05/spaces file3: data
+maybehere06/-file1:       ASCII text, with very long lines (5730)
+maybehere06/-file2:       ASCII text, with very long lines (1075)
+maybehere06/-file3:       data
+maybehere06/spaces file1: ASCII text, with very long lines (4072)
+maybehere06/spaces file2: ASCII text, with very long lines (4250)
+maybehere06/spaces file3: data
+maybehere07/-file1:       ASCII text, with very long lines (3662)
+maybehere07/-file2:       ASCII text, with very long lines (2487)
+maybehere07/-file3:       data
+maybehere07/spaces file1: ASCII text, with very long lines (4129)
+maybehere07/spaces file2: ASCII text, with very long lines (9063)
+maybehere07/spaces file3: data
+maybehere08/-file1:       ASCII text, with very long lines (1076)
+maybehere08/-file2:       ASCII text, with very long lines (3824)
+maybehere08/-file3:       data
+maybehere08/spaces file1: ASCII text
+maybehere08/spaces file2: ASCII text, with very long lines (3692)
+maybehere08/spaces file3: data
+maybehere09/-file1:       ASCII text, with very long lines (3627)
+maybehere09/-file2:       ASCII text, with very long lines (773)
+maybehere09/-file3:       data
+maybehere09/spaces file1: ASCII text, with very long lines (5300)
+maybehere09/spaces file2: ASCII text, with very long lines (8715)
+maybehere09/spaces file3: data
+maybehere10/-file1:       ASCII text, with very long lines (1051)
+maybehere10/-file2:       ASCII text, with very long lines (1990)
+maybehere10/-file3:       data
+maybehere10/spaces file1: ASCII text, with very long lines (8268)
+maybehere10/spaces file2: ASCII text, with very long lines (3569)
+maybehere10/spaces file3: data
+maybehere11/-file1:       ASCII text, with very long lines (1210)
+maybehere11/-file2:       ASCII text, with very long lines (4558)
+maybehere11/-file3:       data
+maybehere11/spaces file1: ASCII text, with very long lines (3146)
+maybehere11/spaces file2: ASCII text, with very long lines (502)
+maybehere11/spaces file3: data
+maybehere12/-file1:       ASCII text, with very long lines (9677)
+maybehere12/-file2:       ASCII text
+maybehere12/-file3:       data
+maybehere12/spaces file1: ASCII text, with very long lines (2156)
+maybehere12/spaces file2: ASCII text, with very long lines (2459)
+maybehere12/spaces file3: data
+maybehere13/-file1:       ASCII text, with very long lines (1358)
+maybehere13/-file2:       ASCII text, with very long lines (1422)
+maybehere13/-file3:       data
+maybehere13/spaces file1: ASCII text, with very long lines (3951)
+maybehere13/spaces file2: ASCII text, with very long lines (951)
+maybehere13/spaces file3: data
+maybehere14/-file1:       ASCII text, with very long lines (4281)
+maybehere14/-file2:       ASCII text, with very long lines (8350)
+maybehere14/-file3:       OpenPGP Secret Key
+maybehere14/spaces file1: ASCII text, with very long lines (1381)
+maybehere14/spaces file2: ASCII text, with very long lines (870)
+maybehere14/spaces file3: data
+maybehere15/-file1:       ASCII text, with very long lines (8793)
+maybehere15/-file2:       ASCII text, with very long lines (9498)
+maybehere15/-file3:       data
+maybehere15/spaces file1: ASCII text, with very long lines (1622)
+maybehere15/spaces file2: ASCII text
+maybehere15/spaces file3: data
+maybehere16/-file1:       ASCII text, with very long lines (4276)
+maybehere16/-file2:       ASCII text, with very long lines (5300)
+maybehere16/-file3:       data
+maybehere16/spaces file1: ASCII text, with very long lines (9772)
+maybehere16/spaces file2: ASCII text, with very long lines (3145)
+maybehere16/spaces file3: data
+maybehere17/-file1:       ASCII text, with very long lines (1132)
+maybehere17/-file2:       ASCII text, with very long lines (1790)
+maybehere17/-file3:       data
+maybehere17/spaces file1: ASCII text, with very long lines (8360)
+maybehere17/spaces file2: ASCII text, with very long lines (3386)
+maybehere17/spaces file3: data
+maybehere18/-file1:       ASCII text, with very long lines (9696)
+maybehere18/-file2:       ASCII text
+maybehere18/-file3:       data
+maybehere18/spaces file1: ASCII text, with very long lines (7333)
+maybehere18/spaces file2: ASCII text, with very long lines (6347)
+maybehere18/spaces file3: data
+maybehere19/-file1:       ASCII text, with very long lines (6301)
+maybehere19/-file2:       ASCII text, with very long lines (5593)
+maybehere19/-file3:       data
+maybehere19/spaces file1: ASCII text, with very long lines (7185)
+maybehere19/spaces file2: ASCII text, with very long lines (8784)
+maybehere19/spaces file3: data
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file */{.,}* | grep ASCII
+[?2004lmaybehere00/.file1:       [01;31m[KASCII[m[K text, with very long lines (550)
+maybehere00/.file2:       [01;31m[KASCII[m[K text, with very long lines (7835)
+maybehere01/.file2:       [01;31m[KASCII[m[K text, with very long lines (3069)
+maybehere02/.file1:       [01;31m[KASCII[m[K text, with very long lines (6350)
+maybehere02/.file2:       [01;31m[KASCII[m[K text, with very long lines (2576)
+maybehere03/.file1:       [01;31m[KASCII[m[K text, with very long lines (9768)
+maybehere03/.file2:       [01;31m[KASCII[m[K text, with very long lines (8879)
+maybehere04/.file1:       [01;31m[KASCII[m[K text, with very long lines (2439)
+maybehere04/.file2:       [01;31m[KASCII[m[K text, with very long lines (6143)
+maybehere05/.file1:       [01;31m[KASCII[m[K text, with very long lines (3200)
+maybehere05/.file2:       [01;31m[KASCII[m[K text, with very long lines (5916)
+maybehere06/.file1:       [01;31m[KASCII[m[K text, with very long lines (1270)
+maybehere06/.file2:       [01;31m[KASCII[m[K text, with very long lines (8975)
+maybehere07/.file1:       [01;31m[KASCII[m[K text, with very long lines (3064)
+maybehere07/.file2:       [01;31m[KASCII[m[K text, with very long lines (1000)
+maybehere08/.file1:       [01;31m[KASCII[m[K text, with very long lines (8168)
+maybehere08/.file2:       [01;31m[KASCII[m[K text, with very long lines (746)
+maybehere09/.file1:       [01;31m[KASCII[m[K text, with very long lines (6762)
+maybehere09/.file2:       [01;31m[KASCII[m[K text, with very long lines (8516)
+maybehere10/.file1:       [01;31m[KASCII[m[K text, with very long lines (7091)
+maybehere10/.file2:       [01;31m[KASCII[m[K text
+maybehere11/.file1:       [01;31m[KASCII[m[K text, with very long lines (451)
+maybehere11/.file2:       [01;31m[KASCII[m[K text, with very long lines (2500)
+maybehere12/.file1:       [01;31m[KASCII[m[K text, with very long lines (5814)
+maybehere12/.file2:       [01;31m[KASCII[m[K text, with very long lines (8243)
+maybehere13/.file1:       [01;31m[KASCII[m[K text, with very long lines (5257)
+maybehere13/.file2:       [01;31m[KASCII[m[K text, with very long lines (8951)
+maybehere14/.file1:       [01;31m[KASCII[m[K text, with very long lines (3426)
+maybehere14/.file2:       [01;31m[KASCII[m[K text, with very long lines (1502)
+maybehere15/.file1:       [01;31m[KASCII[m[K text, with very long lines (2158)
+maybehere15/.file2:       [01;31m[KASCII[m[K text
+maybehere16/.file1:       [01;31m[KASCII[m[K text, with very long lines (5425)
+maybehere16/.file2:       [01;31m[KASCII[m[K text, with very long lines (8471)
+maybehere17/.file1:       [01;31m[KASCII[m[K text, with very long lines (894)
+maybehere17/.file2:       [01;31m[KASCII[m[K text, with very long lines (8340)
+maybehere18/.file1:       [01;31m[KASCII[m[K text, with very long lines (5701)
+maybehere18/.file2:       [01;31m[KASCII[m[K text, with very long lines (2083)
+maybehere19/.file1:       [01;31m[KASCII[m[K text, with very long lines (7208)
+maybehere19/.file2:       [01;31m[KASCII[m[K text, with very long lines (4739)
+maybehere00/-file1:       [01;31m[KASCII[m[K text, with very long lines (1038)
+maybehere00/-file2:       [01;31m[KASCII[m[K text, with very long lines (9387)
+maybehere00/spaces file1: [01;31m[KASCII[m[K text, with very long lines (6117)
+maybehere00/spaces file2: [01;31m[KASCII[m[K text, with very long lines (6849)
+maybehere01/-file1:       [01;31m[KASCII[m[K text, with very long lines (6027)
+maybehere01/-file2:       [01;31m[KASCII[m[K text
+maybehere01/spaces file1: [01;31m[KASCII[m[K text, with very long lines (4138)
+maybehere01/spaces file2: [01;31m[KASCII[m[K text, with very long lines (4542)
+maybehere02/-file1:       [01;31m[KASCII[m[K text, with very long lines (3800)
+maybehere02/spaces file1: [01;31m[KASCII[m[K text, with very long lines (6745)
+maybehere02/spaces file2: [01;31m[KASCII[m[K text, with very long lines (8487)
+maybehere03/-file1:       [01;31m[KASCII[m[K text, with very long lines (314)
+maybehere03/-file2:       [01;31m[KASCII[m[K text, with very long lines (6594)
+maybehere03/spaces file1: [01;31m[KASCII[m[K text, with very long lines (2189)
+maybehere03/spaces file2: [01;31m[KASCII[m[K text, with very long lines (3384)
+maybehere04/-file1:       [01;31m[KASCII[m[K text, with very long lines (4409)
+maybehere04/-file2:       [01;31m[KASCII[m[K text, with very long lines (2618)
+maybehere04/spaces file1: [01;31m[KASCII[m[K text, with very long lines (5531)
+maybehere04/spaces file2: [01;31m[KASCII[m[K text, with very long lines (2490)
+maybehere05/-file1:       [01;31m[KASCII[m[K text, with very long lines (2345)
+maybehere05/-file2:       [01;31m[KASCII[m[K text, with very long lines (5958)
+maybehere05/spaces file1: [01;31m[KASCII[m[K text, with very long lines (879)
+maybehere05/spaces file2: [01;31m[KASCII[m[K text, with very long lines (2419)
+maybehere06/-file1:       [01;31m[KASCII[m[K text, with very long lines (5730)
+maybehere06/-file2:       [01;31m[KASCII[m[K text, with very long lines (1075)
+maybehere06/spaces file1: [01;31m[KASCII[m[K text, with very long lines (4072)
+maybehere06/spaces file2: [01;31m[KASCII[m[K text, with very long lines (4250)
+maybehere07/-file1:       [01;31m[KASCII[m[K text, with very long lines (3662)
+maybehere07/-file2:       [01;31m[KASCII[m[K text, with very long lines (2487)
+maybehere07/spaces file1: [01;31m[KASCII[m[K text, with very long lines (4129)
+maybehere07/spaces file2: [01;31m[KASCII[m[K text, with very long lines (9063)
+maybehere08/-file1:       [01;31m[KASCII[m[K text, with very long lines (1076)
+maybehere08/-file2:       [01;31m[KASCII[m[K text, with very long lines (3824)
+maybehere08/spaces file1: [01;31m[KASCII[m[K text
+maybehere08/spaces file2: [01;31m[KASCII[m[K text, with very long lines (3692)
+maybehere09/-file1:       [01;31m[KASCII[m[K text, with very long lines (3627)
+maybehere09/-file2:       [01;31m[KASCII[m[K text, with very long lines (773)
+maybehere09/spaces file1: [01;31m[KASCII[m[K text, with very long lines (5300)
+maybehere09/spaces file2: [01;31m[KASCII[m[K text, with very long lines (8715)
+maybehere10/-file1:       [01;31m[KASCII[m[K text, with very long lines (1051)
+maybehere10/-file2:       [01;31m[KASCII[m[K text, with very long lines (1990)
+maybehere10/spaces file1: [01;31m[KASCII[m[K text, with very long lines (8268)
+maybehere10/spaces file2: [01;31m[KASCII[m[K text, with very long lines (3569)
+maybehere11/-file1:       [01;31m[KASCII[m[K text, with very long lines (1210)
+maybehere11/-file2:       [01;31m[KASCII[m[K text, with very long lines (4558)
+maybehere11/spaces file1: [01;31m[KASCII[m[K text, with very long lines (3146)
+maybehere11/spaces file2: [01;31m[KASCII[m[K text, with very long lines (502)
+maybehere12/-file1:       [01;31m[KASCII[m[K text, with very long lines (9677)
+maybehere12/-file2:       [01;31m[KASCII[m[K text
+maybehere12/spaces file1: [01;31m[KASCII[m[K text, with very long lines (2156)
+maybehere12/spaces file2: [01;31m[KASCII[m[K text, with very long lines (2459)
+maybehere13/-file1:       [01;31m[KASCII[m[K text, with very long lines (1358)
+maybehere13/-file2:       [01;31m[KASCII[m[K text, with very long lines (1422)
+maybehere13/spaces file1: [01;31m[KASCII[m[K text, with very long lines (3951)
+maybehere13/spaces file2: [01;31m[KASCII[m[K text, with very long lines (951)
+maybehere14/-file1:       [01;31m[KASCII[m[K text, with very long lines (4281)
+maybehere14/-file2:       [01;31m[KASCII[m[K text, with very long lines (8350)
+maybehere14/spaces file1: [01;31m[KASCII[m[K text, with very long lines (1381)
+maybehere14/spaces file2: [01;31m[KASCII[m[K text, with very long lines (870)
+maybehere15/-file1:       [01;31m[KASCII[m[K text, with very long lines (8793)
+maybehere15/-file2:       [01;31m[KASCII[m[K text, with very long lines (9498)
+maybehere15/spaces file1: [01;31m[KASCII[m[K text, with very long lines (1622)
+maybehere15/spaces file2: [01;31m[KASCII[m[K text
+maybehere16/-file1:       [01;31m[KASCII[m[K text, with very long lines (4276)
+maybehere16/-file2:       [01;31m[KASCII[m[K text, with very long lines (5300)
+maybehere16/spaces file1: [01;31m[KASCII[m[K text, with very long lines (9772)
+maybehere16/spaces file2: [01;31m[KASCII[m[K text, with very long lines (3145)
+maybehere17/-file1:       [01;31m[KASCII[m[K text, with very long lines (1132)
+maybehere17/-file2:       [01;31m[KASCII[m[K text, with very long lines (1790)
+maybehere17/spaces file1: [01;31m[KASCII[m[K text, with very long lines (8360)
+maybehere17/spaces file2: [01;31m[KASCII[m[K text, with very long lines (3386)
+maybehere18/-file1:       [01;31m[KASCII[m[K text, with very long lines (9696)
+maybehere18/-file2:       [01;31m[KASCII[m[K text
+maybehere18/spaces file1: [01;31m[KASCII[m[K text, with very long lines (7333)
+maybehere18/spaces file2: [01;31m[KASCII[m[K text, with very long lines (6347)
+maybehere19/-file1:       [01;31m[KASCII[m[K text, with very long lines (6301)
+maybehere19/-file2:       [01;31m[KASCII[m[K text, with very long lines (5593)
+maybehere19/spaces file1: [01;31m[KASCII[m[K text, with very long lines (7185)
+maybehere19/spaces file2: [01;31m[KASCII[m[K text, with very long lines (8784)
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ file */{.,}* | grep ASCII[Kdu -b - a[K[Ka
+[?2004l3065	./maybehere07/.file1
+1033	./maybehere07/.file2
+1997	./maybehere07/.file3
+3663	./maybehere07/-file1
+1022	./maybehere07/spaces file3
+9064	./maybehere07/spaces file2
+2488	./maybehere07/-file2
+4130	./maybehere07/spaces file1
+3362	./maybehere07/-file3
+29824	./maybehere07
+452	./maybehere11/.file1
+2501	./maybehere11/.file2
+8261	./maybehere11/.file3
+1211	./maybehere11/-file1
+8845	./maybehere11/spaces file3
+503	./maybehere11/spaces file2
+4559	./maybehere11/-file2
+3147	./maybehere11/spaces file1
+8854	./maybehere11/-file3
+38333	./maybehere11
+7092	./maybehere10/.file1
+99	./maybehere10/.file2
+2961	./maybehere10/.file3
+1052	./maybehere10/-file1
+2155	./maybehere10/spaces file3
+3570	./maybehere10/spaces file2
+1991	./maybehere10/-file2
+8269	./maybehere10/spaces file1
+1237	./maybehere10/-file3
+28426	./maybehere10
+5426	./maybehere16/.file1
+8472	./maybehere16/.file2
+1148	./maybehere16/.file3
+4277	./maybehere16/-file1
+7509	./maybehere16/spaces file3
+3146	./maybehere16/spaces file2
+5301	./maybehere16/-file2
+9773	./maybehere16/spaces file1
+8085	./maybehere16/-file3
+53137	./maybehere16
+2159	./maybehere15/.file1
+279	./maybehere15/.file2
+742	./maybehere15/.file3
+8794	./maybehere15/-file1
+1637	./maybehere15/spaces file3
+51	./maybehere15/spaces file2
+9499	./maybehere15/-file2
+1623	./maybehere15/spaces file1
+6299	./maybehere15/-file3
+31083	./maybehere15
+5815	./maybehere12/.file1
+8244	./maybehere12/.file2
+1022	./maybehere12/.file3
+9678	./maybehere12/-file1
+1639	./maybehere12/spaces file3
+2460	./maybehere12/spaces file2
+251	./maybehere12/-file2
+2157	./maybehere12/spaces file1
+9076	./maybehere12/-file3
+40342	./maybehere12
+7209	./maybehere19/.file1
+4740	./maybehere19/.file2
+494	./maybehere19/.file3
+6302	./maybehere19/-file1
+2307	./maybehere19/spaces file3
+8785	./maybehere19/spaces file2
+5594	./maybehere19/-file2
+7186	./maybehere19/spaces file1
+7965	./maybehere19/-file3
+50582	./maybehere19
+5258	./maybehere13/.file1
+8952	./maybehere13/.file2
+6965	./maybehere13/.file3
+1359	./maybehere13/-file1
+4389	./maybehere13/spaces file3
+952	./maybehere13/spaces file2
+1423	./maybehere13/-file2
+3952	./maybehere13/spaces file1
+3014	./maybehere13/-file3
+36264	./maybehere13
+8169	./maybehere08/.file1
+747	./maybehere08/.file2
+2217	./maybehere08/.file3
+1077	./maybehere08/-file1
+9138	./maybehere08/spaces file3
+3693	./maybehere08/spaces file2
+3825	./maybehere08/-file2
+215	./maybehere08/spaces file1
+2650	./maybehere08/-file3
+31731	./maybehere08
+895	./maybehere17/.file1
+8341	./maybehere17/.file2
+5094	./maybehere17/.file3
+1133	./maybehere17/-file1
+6381	./maybehere17/spaces file3
+3387	./maybehere17/spaces file2
+1791	./maybehere17/-file2
+8361	./maybehere17/spaces file1
+4422	./maybehere17/-file3
+39805	./maybehere17
+5702	./maybehere18/.file1
+2084	./maybehere18/.file2
+154	./maybehere18/.file3
+9697	./maybehere18/-file1
+7040	./maybehere18/spaces file3
+6348	./maybehere18/spaces file2
+77	./maybehere18/-file2
+7334	./maybehere18/spaces file1
+2306	./maybehere18/-file3
+40742	./maybehere18
+3427	./maybehere14/.file1
+1503	./maybehere14/.file2
+4821	./maybehere14/.file3
+4282	./maybehere14/-file1
+376	./maybehere14/spaces file3
+871	./maybehere14/spaces file2
+8351	./maybehere14/-file2
+1382	./maybehere14/spaces file1
+3756	./maybehere14/-file3
+28769	./maybehere14
+2440	./maybehere04/.file1
+6144	./maybehere04/.file2
+142	./maybehere04/.file3
+4410	./maybehere04/-file1
+6002	./maybehere04/spaces file3
+2491	./maybehere04/spaces file2
+2619	./maybehere04/-file2
+5532	./maybehere04/spaces file1
+2117	./maybehere04/-file3
+31897	./maybehere04
+6763	./maybehere09/.file1
+8517	./maybehere09/.file2
+3798	./maybehere09/.file3
+3628	./maybehere09/-file1
+7569	./maybehere09/spaces file3
+8716	./maybehere09/spaces file2
+774	./maybehere09/-file2
+5301	./maybehere09/spaces file1
+7961	./maybehere09/-file3
+53027	./maybehere09
+8944	./maybehere01/.file1
+3070	./maybehere01/.file2
+3792	./maybehere01/.file3
+6028	./maybehere01/-file1
+8834	./maybehere01/spaces file3
+4543	./maybehere01/spaces file2
+288	./maybehere01/-file2
+4139	./maybehere01/spaces file1
+9641	./maybehere01/-file3
+49279	./maybehere01
+551	./maybehere00/.file1
+7836	./maybehere00/.file2
+4802	./maybehere00/.file3
+1039	./maybehere00/-file1
+1915	./maybehere00/spaces file3
+6850	./maybehere00/spaces file2
+9388	./maybehere00/-file2
+6118	./maybehere00/spaces file1
+7378	./maybehere00/-file3
+45877	./maybehere00
+3201	./maybehere05/.file1
+5917	./maybehere05/.file2
+4585	./maybehere05/.file3
+2346	./maybehere05/-file1
+8585	./maybehere05/spaces file3
+2420	./maybehere05/spaces file2
+5959	./maybehere05/-file2
+880	./maybehere05/spaces file1
+2572	./maybehere05/-file3
+36465	./maybehere05
+6351	./maybehere02/.file1
+2577	./maybehere02/.file2
+7953	./maybehere02/.file3
+3801	./maybehere02/-file1
+2275	./maybehere02/spaces file3
+8488	./maybehere02/spaces file2
+3511	./maybehere02/-file2
+6746	./maybehere02/spaces file1
+4932	./maybehere02/-file3
+46634	./maybehere02
+9769	./maybehere03/.file1
+8880	./maybehere03/.file2
+2282	./maybehere03/.file3
+315	./maybehere03/-file1
+9234	./maybehere03/spaces file3
+3385	./maybehere03/spaces file2
+6595	./maybehere03/-file2
+2190	./maybehere03/spaces file1
+8275	./maybehere03/-file3
+50925	./maybehere03
+1271	./maybehere06/.file1
+8976	./maybehere06/.file2
+2418	./maybehere06/.file3
+5731	./maybehere06/-file1
+8065	./maybehere06/spaces file3
+4251	./maybehere06/spaces file2
+1076	./maybehere06/-file2
+4073	./maybehere06/spaces file1
+3443	./maybehere06/-file3
+39304	./maybehere06
+802446	.
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ du -b -a | grep 1033
+[?2004l[01;31m[K1033[m[K	./maybehere07/.file2
+[?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ cat ./maybehere07/.file2
+[?2004l<PASSWORD REDACTED>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        [?2004h]0;bandit5@bandit: ~/inhere[01;32mbandit5@bandit[00m:[01;34m~/inhere[00m$ exit
+[?2004llogout
+Connection to bandit.labs.overthewire.org closed.
