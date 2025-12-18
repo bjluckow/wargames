@@ -9,7 +9,7 @@
             More information on http://www.overthewire.org/wargames
 
 backend: gibson-1
-bandit1@bandit.labs.overthewire.org's password: 
+bandit3@bandit.labs.overthewire.org's password: 
 
       ,----..            ,----,          .---.
      /   /   \         ,/   .`|         /. ./|
@@ -92,8 +92,13 @@ discord or IRC.
 
   Enjoy your stay!
 
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ cat ./-
+[?2004h]0;bandit3@bandit: ~[01;32mbandit3@bandit[00m:[01;34m~[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  .bash_logout  .bashrc  [01;34minhere[0m  .profile
+[?2004h]0;bandit3@bandit: ~[01;32mbandit3@bandit[00m:[01;34m~[00m$ cd inhere
+[?2004l[?2004h]0;bandit3@bandit: ~/inhere[01;32mbandit3@bandit[00m:[01;34m~/inhere[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  ...Hiding-From-You
+[?2004h]0;bandit3@bandit: ~/inhere[01;32mbandit3@bandit[00m:[01;34m~/inhere[00m$ cat "./...Hiding-From-You" 
 [?2004l<PASSWORD REDACTED>
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ exit
+[?2004h]0;bandit3@bandit: ~/inhere[01;32mbandit3@bandit[00m:[01;34m~/inhere[00m$ exit
 [?2004llogout
 Connection to bandit.labs.overthewire.org closed.

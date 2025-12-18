@@ -9,7 +9,7 @@
             More information on http://www.overthewire.org/wargames
 
 backend: gibson-1
-bandit1@bandit.labs.overthewire.org's password: 
+bandit4@bandit.labs.overthewire.org's password: 
 
       ,----..            ,----,          .---.
      /   /   \         ,/   .`|         /. ./|
@@ -92,8 +92,25 @@ discord or IRC.
 
   Enjoy your stay!
 
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ cat ./-
+[?2004h]0;bandit4@bandit: ~[01;32mbandit4@bandit[00m:[01;34m~[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  .bash_logout  .bashrc  [01;34minhere[0m  .profile
+[?2004h]0;bandit4@bandit: ~[01;32mbandit4@bandit[00m:[01;34m~[00m$ cd inhere/
+[?2004l[?2004h]0;bandit4@bandit: ~/inhere[01;32mbandit4@bandit[00m:[01;34m~/inhere[00m$ ls -a
+[?2004l[0m[01;34m.[0m   -file00  -file02  -file04  -file06  -file08
+[01;34m..[0m  -file01  -file03  -file05  -file07  -file09
+[?2004h]0;bandit4@bandit: ~/inhere[01;32mbandit4@bandit[00m:[01;34m~/inhere[00m$ file ./*
+[?2004l./-file00: data
+./-file01: OpenPGP Public Key
+./-file02: OpenPGP Public Key
+./-file03: data
+./-file04: data
+./-file05: data
+./-file06: data
+./-file07: ASCII text
+./-file08: data
+./-file09: data
+[?2004h]0;bandit4@bandit: ~/inhere[01;32mbandit4@bandit[00m:[01;34m~/inhere[00m$ cat ./-file07
 [?2004l<PASSWORD REDACTED>
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ exit
+[?2004h]0;bandit4@bandit: ~/inhere[01;32mbandit4@bandit[00m:[01;34m~/inhere[00m$ exit
 [?2004llogout
 Connection to bandit.labs.overthewire.org closed.

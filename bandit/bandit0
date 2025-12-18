@@ -9,7 +9,7 @@
             More information on http://www.overthewire.org/wargames
 
 backend: gibson-1
-bandit1@bandit.labs.overthewire.org's password: 
+bandit0@bandit.labs.overthewire.org's password: 
 
       ,----..            ,----,          .---.
      /   /   \         ,/   .`|         /. ./|
@@ -92,8 +92,17 @@ discord or IRC.
 
   Enjoy your stay!
 
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ cat ./-
-[?2004l<PASSWORD REDACTED>
-[?2004h]0;bandit1@bandit: ~[01;32mbandit1@bandit[00m:[01;34m~[00m$ exit
+[?2004h]0;bandit0@bandit: ~[01;32mbandit0@bandit[00m:[01;34m~[00m$ ls
+[?2004lreadme
+[?2004h]0;bandit0@bandit: ~[01;32mbandit0@bandit[00m:[01;34m~[00m$ cat readme
+[?2004lCongratulations on your first steps into the bandit game!!
+Please make sure you have read the rules at https://overthewire.org/rules/
+If you are following a course, workshop, walkthrough or other educational activity,
+please inform the instructor about the rules as well and encourage them to
+contribute to the OverTheWire community so we can keep these games free!
+
+The password you are looking for is: <PASSWORD REDACTED>
+
+[?2004h]0;bandit0@bandit: ~[01;32mbandit0@bandit[00m:[01;34m~[00m$ exit
 [?2004llogout
 Connection to bandit.labs.overthewire.org closed.
