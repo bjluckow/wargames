@@ -1,0 +1,292 @@
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit6@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+[?2004h]0;bandit6@bandit: ~[01;32mbandit6@bandit[00m:[01;34m~[00m$ ls -a
+[?2004l[0m[01;34m.[0m  [01;34m..[0m  .bash_logout  .bashrc  .profile
+[?2004h]0;bandit6@bandit: ~[01;32mbandit6@bandit[00m:[01;34m~[00m$ cd ..
+[?2004l[?2004h]0;bandit6@bandit: /home[01;32mbandit6@bandit[00m:[01;34m/home[00m$ ls -a
+[?2004l[0m[01;34m.[0m         [01;34mbandit22[0m      [01;34mbandit33[0m   [01;34mdrifter1[0m     [01;34mformulaone3[0m  [01;34mleviathan7[0m  [01;34mmaze8[0m    [01;34mutumno4[0m   [01;34mvortex2[0m
+[01;34m..[0m        [01;34mbandit23[0m      [01;34mbandit4[0m    [01;34mdrifter10[0m    [01;34mformulaone5[0m  [01;34mmanpage0[0m    [01;34mmaze9[0m    [01;34mutumno5[0m   [01;34mvortex20[0m
+[01;34mbandit0[0m   [01;34mbandit24[0m      [01;34mbandit5[0m    [01;34mdrifter12[0m    [01;34mformulaone6[0m  [01;34mmanpage1[0m    [01;34mnarnia0[0m  [01;34mutumno6[0m   [01;34mvortex21[0m
+[01;34mbandit1[0m   [01;34mbandit25[0m      [01;34mbandit6[0m    [01;34mdrifter13[0m    [01;34mkrypton1[0m     [01;34mmanpage2[0m    [01;34mnarnia1[0m  [01;34mutumno7[0m   [01;34mvortex22[0m
+[01;34mbandit10[0m  [01;34mbandit26[0m      [01;34mbandit7[0m    [01;34mdrifter14[0m    [01;34mkrypton2[0m     [01;34mmanpage3[0m    [01;34mnarnia2[0m  [01;34mutumno8[0m   [01;34mvortex23[0m
+[01;34mbandit11[0m  [01;34mbandit27[0m      [01;34mbandit8[0m    [01;34mdrifter15[0m    [01;34mkrypton3[0m     [01;34mmanpage4[0m    [01;34mnarnia3[0m  [01;34mvortex0[0m   [01;34mvortex24[0m
+[01;34mbandit12[0m  [01;34mbandit27-git[0m  [01;34mbandit9[0m    [01;34mdrifter2[0m     [01;34mkrypton4[0m     [01;34mmanpage5[0m    [01;34mnarnia4[0m  [01;34mvortex1[0m   [01;34mvortex25[0m
+[01;34mbandit13[0m  [01;34mbandit28[0m      [01;34mbehemoth0[0m  [01;34mdrifter3[0m     [01;34mkrypton5[0m     [01;34mmanpage6[0m    [01;34mnarnia5[0m  [01;34mvortex10[0m  [01;34mvortex3[0m
+[01;34mbandit14[0m  [01;34mbandit28-git[0m  [01;34mbehemoth1[0m  [01;34mdrifter4[0m     [01;34mkrypton6[0m     [01;34mmanpage7[0m    [01;34mnarnia6[0m  [01;34mvortex11[0m  [01;34mvortex4[0m
+[01;34mbandit15[0m  [01;34mbandit29[0m      [01;34mbehemoth2[0m  [01;34mdrifter5[0m     [01;34mkrypton7[0m     [01;34mmaze0[0m       [01;34mnarnia7[0m  [01;34mvortex12[0m  [01;34mvortex5[0m
+[01;34mbandit16[0m  [01;34mbandit29-git[0m  [01;34mbehemoth3[0m  [01;34mdrifter6[0m     [01;34mleviathan0[0m   [01;34mmaze1[0m       [01;34mnarnia8[0m  [01;34mvortex13[0m  [01;34mvortex6[0m
+[01;34mbandit17[0m  [01;34mbandit3[0m       [01;34mbehemoth4[0m  [01;34mdrifter7[0m     [01;34mleviathan1[0m   [01;34mmaze2[0m       [01;34mnarnia9[0m  [01;34mvortex14[0m  [01;34mvortex7[0m
+[01;34mbandit18[0m  [01;34mbandit30[0m      [01;34mbehemoth5[0m  [01;34mdrifter8[0m     [01;34mleviathan2[0m   [01;34mmaze3[0m       [01;34mubuntu[0m   [01;34mvortex15[0m  [01;34mvortex8[0m
+[01;34mbandit19[0m  [01;34mbandit30-git[0m  [01;34mbehemoth6[0m  [01;34mdrifter9[0m     [01;34mleviathan3[0m   [01;34mmaze4[0m       [01;34mutumno0[0m  [01;34mvortex16[0m  [01;34mvortex9[0m
+[01;34mbandit2[0m   [01;34mbandit31[0m      [01;34mbehemoth7[0m  [01;34mformulaone0[0m  [01;34mleviathan4[0m   [01;34mmaze5[0m       [01;34mutumno1[0m  [01;34mvortex17[0m
+[01;34mbandit20[0m  [01;34mbandit31-git[0m  [01;34mbehemoth8[0m  [01;34mformulaone1[0m  [01;34mleviathan5[0m   [01;34mmaze6[0m       [01;34mutumno2[0m  [01;34mvortex18[0m
+[01;34mbandit21[0m  [01;34mbandit32[0m      [01;34mdrifter0[0m   [01;34mformulaone2[0m  [01;34mleviathan6[0m   [01;34mmaze7[0m       [01;34mutumno3[0m  [01;34mvortex19[0m
+[?2004h]0;bandit6@bandit: /home[01;32mbandit6@bandit[00m:[01;34m/home[00m$ cd ..
+[?2004l[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ la[Ks -a
+[?2004l[0m[01;34m.[0m                  [01;34mboot[0m        [01;34mhome[0m     [01;34mlib.usr-is-merged[0m  [01;34mmedia[0m   [01;34mroot[0m                [01;34msrv[0m     [01;34mvar[0m
+[01;34m..[0m                 [01;34mdev[0m         [01;34mkrypton[0m  [01;36mlibx32[0m             [01;34mmnt[0m     [01;34mrun[0m                 [01;34msys[0m     [01;34mvortex[0m
+[01;34mbehemoth[0m           [01;34mdrifter[0m     [01;36mlib[0m      [01;34mlost+found[0m         [01;34mnarnia[0m  [01;36msbin[0m                [30;42mtmp[0m
+[01;36mbin[0m                [01;34metc[0m         [01;36mlib32[0m    [01;34mmanpage[0m            [01;34mopt[0m     [01;34msbin.usr-is-merged[0m  [01;34musr[0m
+[01;34mbin.usr-is-merged[0m  [01;34mformulaone[0m  [01;36mlib64[0m    [01;34mmaze[0m               [01;34mproc[0m    [01;34msnap[0m                [01;34mutumno[0m
+[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ ls -l
+[?2004ltotal 10128
+drwxr-xr-x    2 root root     4096 Oct 14 09:26 [0m[01;34mbehemoth[0m
+lrwxrwxrwx    1 root root        7 Apr 22  2024 [01;36mbin[0m -> [01;34musr/bin[0m
+drwxr-xr-x    2 root root     4096 Feb 26  2024 [01;34mbin.usr-is-merged[0m
+drwxr-xr-x    5 root root     4096 Oct  1 10:10 [01;34mboot[0m
+drwxr-xr-x   16 root root     3340 Dec 18 18:55 [01;34mdev[0m
+drwxr-xr-x    7 root root     4096 Oct 14 09:27 [01;34mdrifter[0m
+drwxr-xr-x  128 root root    12288 Oct 20 16:35 [01;34metc[0m
+drwxr-xr-x    3 root root     4096 Oct 14 09:27 [01;34mformulaone[0m
+drwxr-xr-x  150 root root     4096 Oct 14 09:29 [01;34mhome[0m
+drwxr-xr-x    9 root root     4096 Oct 14 09:27 [01;34mkrypton[0m
+lrwxrwxrwx    1 root root        7 Apr 22  2024 [01;36mlib[0m -> [01;34musr/lib[0m
+lrwxrwxrwx    1 root root        9 Oct 14 09:19 [01;36mlib32[0m -> [01;34musr/lib32[0m
+lrwxrwxrwx    1 root root        9 Apr 22  2024 [01;36mlib64[0m -> [01;34musr/lib64[0m
+drwxr-xr-x    2 root root     4096 Apr  8  2024 [01;34mlib.usr-is-merged[0m
+lrwxrwxrwx    1 root root       10 Oct 14 09:19 [01;36mlibx32[0m -> [01;34musr/libx32[0m
+drwx------    2 root root    16384 Oct  1 10:02 [01;34mlost+found[0m
+drwxr-xr-x    3 root root     4096 Oct 14 09:28 [01;34mmanpage[0m
+drwxr-xr-x    2 root root     4096 Oct 14 09:28 [01;34mmaze[0m
+drwxr-xr-x    2 root root     4096 Oct  1 09:59 [01;34mmedia[0m
+drwxr-xr-x    2 root root     4096 Oct  1 09:59 [01;34mmnt[0m
+drwxr-xr-x    2 root root     4096 Oct 14 09:28 [01;34mnarnia[0m
+drwxr-xr-x    6 root root     4096 Oct 14 09:21 [01;34mopt[0m
+dr-xr-xr-x  433 root root        0 Dec 18 18:54 [01;34mproc[0m
+drwx------    7 root root     4096 Oct 16 11:28 [01;34mroot[0m
+drwxr-xr-x   31 root root     1000 Dec  1 04:32 [01;34mrun[0m
+lrwxrwxrwx    1 root root        8 Apr 22  2024 [01;36msbin[0m -> [01;34musr/sbin[0m
+drwxr-xr-x    2 root root     4096 Mar 31  2024 [01;34msbin.usr-is-merged[0m
+drwx------    6 root root     4096 Oct  1 10:11 [01;34msnap[0m
+drwxr-xr-x    2 root root     4096 Oct  1 09:59 [01;34msrv[0m
+dr-xr-xr-x   13 root root        0 Nov 30 17:07 [01;34msys[0m
+drwxrwx-wt 9568 root root 10244096 Dec 18 18:55 [30;42mtmp[0m
+drwxr-xr-x   14 root root     4096 Oct 14 09:26 [01;34musr[0m
+drwxr-xr-x    2 root root     4096 Oct 14 09:28 [01;34mutumno[0m
+drwxr-xr-x   14 root root     4096 Oct 20 16:35 [01;34mvar[0m
+drwxr-xr-x    2 root root     4096 Oct 14 09:29 [01;34mvortex[0m
+[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ find . -type f -user bandity[K7 -group bandit6 -size 33c
+[?2004lfind: ‘./proc/tty/driver’: Permission denied
+find: ‘./proc/1/task/1/fd’: Permission denied
+find: ‘./proc/1/task/1/fdinfo’: Permission denied
+find: ‘./proc/1/task/1/ns’: Permission denied
+find: ‘./proc/1/fd’: Permission denied
+find: ‘./proc/1/map_files’: Permission denied
+find: ‘./proc/1/fdinfo’: Permission denied
+find: ‘./proc/1/ns’: Permission denied
+find: ‘./proc/2/task/2/fd’: Permission denied
+find: ‘./proc/2/task/2/fdinfo’: Permission denied
+find: ‘./proc/2/task/2/ns’: Permission denied
+find: ‘./proc/2/fd’: Permission denied
+find: ‘./proc/2/map_files’: Permission denied
+find: ‘./proc/2/fdinfo’: Permission denied
+find: ‘./proc/2/ns’: Permission denied
+find: ‘./proc/21/task/21/fdinfo/6’: No such file or directory
+find: ‘./proc/21/fdinfo/5’: No such file or directory
+find: ‘./lost+found’: Permission denied
+find: ‘./var/tmp’: Permission denied
+find: ‘./var/spool/bandit24’: Permission denied
+find: ‘./var/spool/cron/crontabs’: Permission denied
+find: ‘./var/spool/rsyslog’: Permission denied
+find: ‘./var/lib/update-notifier/package-data-downloads/partial’: Permission denied
+find: ‘./var/lib/apt/lists/partial’: Permission denied
+find: ‘./var/lib/polkit-1’: Permission denied
+find: ‘./var/lib/chrony’: Permission denied
+find: ‘./var/lib/udisks2’: Permission denied
+find: ‘./var/lib/snapd/cookie’: Permission denied
+find: ‘./var/lib/snapd/void’: Permission denied
+find: ‘./var/lib/private’: Permission denied
+find: ‘./var/lib/ubuntu-advantage/apt-esm/var/lib/apt/lists/partial’: Permission denied
+./var/lib/dpkg/info/bandit7.password
+find: ‘./var/lib/amazon’: Permission denied
+find: ‘./var/crash’: Permission denied
+find: ‘./var/cache/apt/archives/partial’: Permission denied
+find: ‘./var/cache/pollinate’: Permission denied
+find: ‘./var/cache/private’: Permission denied
+find: ‘./var/cache/apparmor/208b6430.0’: Permission denied
+find: ‘./var/cache/apparmor/0fb44ac6.0’: Permission denied
+find: ‘./var/cache/ldconfig’: Permission denied
+find: ‘./var/log’: Permission denied
+find: ‘./sys/kernel/tracing/osnoise’: Permission denied
+find: ‘./sys/kernel/tracing/hwlat_detector’: Permission denied
+find: ‘./sys/kernel/tracing/instances’: Permission denied
+find: ‘./sys/kernel/tracing/trace_stat’: Permission denied
+find: ‘./sys/kernel/tracing/per_cpu’: Permission denied
+find: ‘./sys/kernel/tracing/options’: Permission denied
+find: ‘./sys/kernel/tracing/rv’: Permission denied
+find: ‘./sys/kernel/debug’: Permission denied
+find: ‘./sys/fs/pstore’: Permission denied
+find: ‘./sys/fs/bpf’: Permission denied
+find: ‘./drifter/drifter14_src/axTLS’: Permission denied
+find: ‘./tmp’: Permission denied
+find: ‘./snap’: Permission denied
+find: ‘./home/bandit31-git’: Permission denied
+find: ‘./home/leviathan4/.trash’: Permission denied
+find: ‘./home/drifter8/chroot’: Permission denied
+find: ‘./home/bandit29-git’: Permission denied
+find: ‘./home/bandit27-git’: Permission denied
+find: ‘./home/drifter6/data’: Permission denied
+find: ‘./home/bandit5/inhere’: Permission denied
+find: ‘./home/bandit28-git’: Permission denied
+find: ‘./home/leviathan0/.backup’: Permission denied
+find: ‘./home/ubuntu’: Permission denied
+find: ‘./home/bandit30-git’: Permission denied
+find: ‘./boot/efi’: Permission denied
+find: ‘./boot/lost+found’: Permission denied
+find: ‘./run/pam_pidns’: Permission denied
+find: ‘./run/udisks2’: Permission denied
+find: ‘./run/chrony’: Permission denied
+find: ‘./run/user/11017’: Permission denied
+find: ‘./run/user/11027’: Permission denied
+find: ‘./run/user/11007’: Permission denied
+find: ‘./run/user/8002’: Permission denied
+find: ‘./run/user/11016’: Permission denied
+find: ‘./run/user/11021’: Permission denied
+find: ‘./run/user/11008’: Permission denied
+find: ‘./run/user/11026’: Permission denied
+find: ‘./run/user/11006/systemd/inaccessible/dir’: Permission denied
+find: ‘./run/user/11011’: Permission denied
+find: ‘./run/user/11015’: Permission denied
+find: ‘./run/user/11013’: Permission denied
+find: ‘./run/user/11009’: Permission denied
+find: ‘./run/user/11004’: Permission denied
+find: ‘./run/user/11020’: Permission denied
+find: ‘./run/user/11001’: Permission denied
+find: ‘./run/user/8003’: Permission denied
+find: ‘./run/user/11002’: Permission denied
+find: ‘./run/user/11000’: Permission denied
+find: ‘./run/user/11012’: Permission denied
+find: ‘./run/user/11005’: Permission denied
+find: ‘./run/sudo’: Permission denied
+find: ‘./run/screen/S-bandit12’: Permission denied
+find: ‘./run/screen/S-bandit24’: Permission denied
+find: ‘./run/screen/S-bandit23’: Permission denied
+find: ‘./run/screen/S-bandit21’: Permission denied
+find: ‘./run/screen/S-bandit0’: Permission denied
+find: ‘./run/screen/S-bandit25’: Permission denied
+find: ‘./run/screen/S-bandit20’: Permission denied
+find: ‘./run/multipath’: Permission denied
+find: ‘./run/cryptsetup’: Permission denied
+find: ‘./run/lvm’: Permission denied
+find: ‘./run/systemd/propagate/fwupd.service’: Permission denied
+find: ‘./run/systemd/propagate/ModemManager.service’: Permission denied
+find: ‘./run/systemd/propagate/polkit.service’: Permission denied
+find: ‘./run/systemd/propagate/chrony.service’: Permission denied
+find: ‘./run/systemd/propagate/systemd-logind.service’: Permission denied
+find: ‘./run/systemd/propagate/irqbalance.service’: Permission denied
+find: ‘./run/systemd/propagate/systemd-networkd.service’: Permission denied
+find: ‘./run/systemd/propagate/systemd-resolved.service’: Permission denied
+find: ‘./run/systemd/propagate/systemd-udevd.service’: Permission denied
+find: ‘./run/systemd/inaccessible/dir’: Permission denied
+find: ‘./run/lock/lvm’: Permission denied
+find: ‘./etc/multipath’: Permission denied
+find: ‘./etc/stunnel’: Permission denied
+find: ‘./etc/credstore.encrypted’: Permission denied
+find: ‘./etc/sudoers.d’: Permission denied
+find: ‘./etc/xinetd.d’: Permission denied
+find: ‘./etc/polkit-1/rules.d’: Permission denied
+find: ‘./etc/credstore’: Permission denied
+find: ‘./etc/ssl/private’: Permission denied
+find: ‘./root’: Permission denied
+find: ‘./manpage/manpage3-pw’: Permission denied
+find: ‘./dev/mqueue’: Permission denied
+find: ‘./dev/shm’: Permission denied
+[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ find . -type f -user bandit7 -group bandit6 -size 33c 2>d[K/dev/null
+[?2004l./var/lib/dpkg/info/bandit7.password
+[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ cd [K[Kat [7m./var/lib/dpkg/info/bandit7.password[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C./var/lib/dpkg/info/bandit7.password
+[?2004l<PASSWORD REDACTED>
+[?2004h]0;bandit6@bandit: /[01;32mbandit6@bandit[00m:[01;34m/[00m$ exit
+[?2004llogout
+Connection to bandit.labs.overthewire.org closed.
