@@ -1,0 +1,189 @@
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-1
+bandit7@bandit.labs.overthewire.org's password: 
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+[?2004h]0;bandit7@bandit: ~[01;32mbandit7@bandit[00m:[01;34m~[00m$ ls
+[?2004ldata.txt
+[?2004h]0;bandit7@bandit: ~[01;32mbandit7@bandit[00m:[01;34m~[00m$ less data.txt
+[?2004l[?1049h[22;0;0t[?1h=peroration's    a9aUjV0EDU4p4oiy1MECWUbZx67GqDIN
+benefactress    J5Qj0V9NvcXtjf5i9pWCDcWwqLpXrF3j
+Lubbock GjfK8Mo1FyG2NZs0KdBMaJlCLgTIAJA9
+dispossession's dIOOFe0Cfv2NkSTwQl43yRAerDOWTvpH
+libidos vTCZdLjTG02C1vbuJFxG2vqpvmIllv8Z
+flailed 3uZIT1mgZe2G4HjnxlL8xQ9dx2sUsmVc
+cyclone's       cpqxy7fYUJY5Ng5couwcih5GU285irTN
+curt    dz9MYBvtkGaAsQmOs5r964zm0c3OAvQY
+amphitheater's  RG06ahKLryAUEdZbFAIqDU2DvrKq9lYV
+infrequent      prgVPbuC3H3BHxzhsybUplbyVRdljiKI
+sax     5r0DmK6YyGD70Ss6CKeyS689lCeKqk84
+napkin  4mwcreBnl11UepqkkvVPNsr0zIQCR0HT
+outdated        zLHnfs9Dhy1mfDJpEX64i4cAwOdSuQ0j
+tumbril HwsEm3F6hi8Vhov2fST39mQuVqspc3Ow
+reinvest        hGaAUrC5aajzwdyooEYwJ8MTkEx2Pe7B
+caroler f622NdlWUaBaEOcI9QM9vfiSk2QAIVZY
+megacycles      epPGoMITcH2Gc44nlGzOBmhR5SiSUPKz
+impecuniousness d3GZkbes4xVFhMetyfsChrOGrLwWrhXZ
+substructures   IER3vKpD3EXXDFSlp0xXFhciZBX5WC0g
+asceticism      oH8WE8riPvorvUGA0JMw3Zwxu8GKEXol
+chemical's      gF9bze5uD4Y9o60I1L891nCLJrsPJhQG
+indelicacy's    Y3nN58SbmGFt3WT7QLWm2tVPZfjh3n6l
+librarian's     GkmS9PuNrFh8XSi6z90uEykLSJvFBhdB
+proceedings     8uWRHC8JfWrh8WfxuagKP8KwlyuVXygi
+necrosis's      ypl72mnDEGGXL6QqymVEVRvhJLa2NpCB
+waken's vK4IlsIdO9SylhNvKGFouc0aARRw4Px1
+frazzled        00u0AYeVAXrK0vl593B1p32FW1WgyqDP
+quoting Azqrk8uy2EAoIUh5D6NrH7ulktLbgOpJ
+balls   VtaafyCozTwSPr2dbbibnXHoTsTyswap
+dim     6zj1g9JKPD5EI40ibNNvUOGyewjEw73d
+drys    HjHGCrYDecH36PJ4uSxvDNwAh9nyuS3H
+shaggy  PHufXpXd5BImXZl1teEAI6ZBPf8YBgA3
+devaluation's   poeDWi3OUfKcNCY2M9e8zTVOXownyc9o
+impel   jGZ03o0taHr2WQO3NLGl1jqt52BVfu7c
+addle   1rup2eHu4eu01IELNUkKG0fCgXDgZLSS
+pudding's       WjryDqJvLz2uPFRFK6dUPAv58GVPUCOW
+decamp  QJXhpLAsXsEqQVdMdD8kmTiPjghKFI3K
+chiefly ZpwMFjtpNAUrQ5CTcP71xXn9tIliR1vW
+purifying       XWgFNymlXiP29zGfBY0lsVMIqBs4xcOe
+governing       yAgLkq9l0FM4hWqVPzYcjiOaFSrsIkDO
+aerialist       apAoOIRhebjJVNIUUqwvjpz5dzVuH9Jm
+anesthetizing   0IpmuFtpWHkougIkLpXBO1t613yvwecB
+subtotaled      IXmFKLH0Tmxi0S4RhhneJObQKIqWT3k4
+truckload       xCwPnyYM5PrMBzyanUJFdHzE1POOxC9r
+persuasively    idhgJvWbu1QrgQmqYZgebIXXPwYe4h7Y
+abrasiveness    yhMcErZrRfTe2l0VspdpoPRVaB3obRUi
+smarter BXTNpQhtCwPwVIvOb6gNkhQW8HK18n20
+levees  ItTV50d3DmQTGDg1NaCvcAAmX1KiL4El
+Modigliani      iJOYibUlJfSAkgh7ETjTTVBC8BHLuqW8
+wardroom        iS3oXUfFuMwKZKS1o9SJzmlfIYqSheEz
+jewelers        1CQvELarILkBsIoJGMlsLvnlZRhJG7l7
+Turing's        mQwAGfhlN5RUJXww1KysAhARCgJNrlLX
+aquas   VcZr73le04fYvYNPw89K2DBigLwq4eAN
+incrustation    qhD4I0IX4RdVaQIqPpA8FUAycd69ReFB
+sconce  YQMABLhd0KrAfgjrALz0KSFl2o93g1mN
+libeled nXrXA16FBd9IUpxeQaf3gc0rogWKaYgY
+farmhouse       aAMEh5buP5dmu4tFNyhUGLAs8Go4SnN5
+frillies        bARyQSrxegHnqjRi3sy4bfWiDstf6pil
+[7mdata.txt[27m[K[K [KESCESC[KOO[KBB[KDakota  dQu8VMbyYfGiOYV3PY041mkap1AKTKiG
+:[K[K [KESCESC[KOO[KBB[Kerase   7Y1rTH21OAC42I6xt4ZHj5eX7T7KumcB
+:[K[K [KESCESC[KOO[KBB[Ktrendiest       rIIv85j1rpn6wvv2UmitbXclvD2GWIkf
+:[K[K [KESCESC[KOO[KBB[Kdesolation      xPJG30rBasffncXUa8nKY639CDcQwtKL
+:[K[K [KESCESC[KOO[KBB[Klevy    IPOgxK2ZKN6F6MqjhtlPMTnuLFAMyfo3
+:[K[K [KESCESC[KOO[KAA[K[HMlibidos vTCZdLjTG02C1vbuJFxG2vqpvmIllv8Z
+[59;1H[K:[K[K [KESCESC[KOO[KAA[K[HMdispossession's dIOOFe0Cfv2NkSTwQl43yRAerDOWTvpH
+[59;1H[K:[K[K [KESCESC[KOO[KAA[K[HMLubbock GjfK8Mo1FyG2NZs0KdBMaJlCLgTIAJA9
+[59;1H[K:[K[K [KESCESC[KOO[KAA[K[HMbenefactress    J5Qj0V9NvcXtjf5i9pWCDcWwqLpXrF3j
+[59;1H[K:[K[K [KESCESC[KOO[KAA[K[HMperoration's    a9aUjV0EDU4p4oiy1MECWUbZx67GqDIN
+[59;1H[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KAA[K[K:[K[K [KESCESC[KOO[KBB[KDakota  dQu8VMbyYfGiOYV3PY041mkap1AKTKiG
+:[K[K [KESCESC[KOO[KBB[Kerase   7Y1rTH21OAC42I6xt4ZHj5eX7T7KumcB
+:[K[K [KESCESC[KOO[KBB[Ktrendiest       rIIv85j1rpn6wvv2UmitbXclvD2GWIkf
+:[K[K [KESCESC[KOO[KBB[Kdesolation      xPJG30rBasffncXUa8nKY639CDcQwtKL
+:[K[K [KESCESC[KOO[KBB[Klevy    IPOgxK2ZKN6F6MqjhtlPMTnuLFAMyfo3
+:[K[K [KESCESC[KOO[KBB[Kabjures qayBW2LYm9VsrDrYdBVGbljZYnsJQhV6
+:[K[K [KESCESC[KOO[KBB[Kfrontiers       KUkei4H3CPv2pX63CzoJGTTNOVQtxq5O
+:[K[K [KESCESC[KOO[KBB[Kfourteen        MTwDUKp9YILOtfYZsdH7Sghy4uHR6cUo
+:[K[K [KESCESC[KOO[KBB[Kprojections     6KggNwjzqJbIlUfyllCV131fc8rp5NjG
+:[K[K [KESCESC[KOO[KBB[Kinterrogator    upfozJQcQpBjnYTt3efXnnYsMptPPwVG
+:[K[K [KESCESC[KOO[KBB[Ksafeness's      c2OpCYRtpsg3D3aC11QzYBrg3LkZnTDM
+:[K[K [KESCESC[KOO[KBB[Ksuperpowers     2VJSxJ04Gc1rkHnmVG1beSg3ucYVn4nk
+:[K[K [KESCESC[KOO[KBB[Kbovines 2hH7AqgU5FsRvfwUFjA9YyYUrIskEwTS
+:[K[K [KESCESC[KOO[KBB[Kbroomstick      PzompMWr0mpj1gMb5ORYInBa47jOYDoE
+:[K[K [KESCESC[KOO[KBB[Kwillies rpn0naf1hf89WvPm8kJeyIUxxRSsl6Vs
+:[K[K [KESCESC[KOO[KBB[Kcheckerboards   HiREj1265oQmwKNdG9RntT7a8maUaYLL
+:[K[K [KESCESC[KOO[KBB[Kdissemination's pvMM3sz0HTy1iqTIKGKUQDQR49Svl8N1
+:[K[K[?1l>[?1049l[23;0;0t[?2004h]0;bandit7@bandit: ~[01;32mbandit7@bandit[00m:[01;34m~[00m$ data.txt | grep millionth
+[?2004ldata.txt: command not found
+[?2004h]0;bandit7@bandit: ~[01;32mbandit7@bandit[00m:[01;34m~[00m$ data.txt | grep millionth[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@c[1@a[1@t[1@ 
+[?2004l[01;31m[Kmillionth[m[K	<PASSWORD REDACTED>
+[?2004h]0;bandit7@bandit: ~[01;32mbandit7@bandit[00m:[01;34m~[00m$ exit
+[?2004llogout
+Connection to bandit.labs.overthewire.org closed.

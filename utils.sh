@@ -6,7 +6,7 @@ begin() {
 
   host="bandit.labs.overthewire.org"
   port=2220
-  out="$lvl.raw"
+  out="$lvl"
 
   if [ -e "$out" ]; then
     echo "output file already exists: $out" >&2
