@@ -10,11 +10,6 @@ typeset -g CMDLOG_FILE=""
 typeset -g CMDLOG_PREEXEC_FN="cmdlog__preexec"
 typeset -g CMDLOG_EXIT_FN="cmdlog__on_exit"
 
-cmdlog__ts() {
-  # macOS-compatible timestamp
-  date "+%Y-%m-%dT%H:%M:%S%z"
-}
-
 cmdlog__abspath() {
   local out="$1"
   [[ "$out" != /* ]] && out="$PWD/$out"
@@ -48,11 +43,11 @@ cmdlog_start() {
 
   # if switching files, close the old one first
   if [[ -n "$CMDLOG_FILE" && "$CMDLOG_FILE" != "$out" ]]; then
-    print -r -- "# stopped: $(cmdlog__ts)" >> "$CMDLOG_FILE"
+    print -r -- "cmdlog stopped" 
   fi
 
   CMDLOG_FILE="$out"
-  print -r -- "# started: $(cmdlog__ts)" >> "$CMDLOG_FILE"
+  print -r -- "cmdlog started "
 
   add-zsh-hook -d preexec cmdlog__preexec 2>/dev/null
   add-zsh-hook -d zshexit cmdlog__on_exit 2>/dev/null
@@ -62,7 +57,7 @@ cmdlog_start() {
 
 cmdlog_stop() {
   [[ -n "$CMDLOG_FILE" ]] || return 0
-  print -r -- "# stopped: $(cmdlog__ts)" >> "$CMDLOG_FILE"
+  print -r -- "stopped"
   CMDLOG_FILE=""
 }
 
