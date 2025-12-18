@@ -1,13 +1,19 @@
 # usage: source ./utils.sh
 
-login() {
+begin() {
   lvl="$1"
   [ -n "$lvl" ] || { echo "usage: login <banditN>"; return 2; }
 
   host="bandit.labs.overthewire.org"
   port=2220
+  out="$lvl"
 
-  script -q "${lvl}" ssh "${lvl}@${host}" -p "${port}"
+  if [ -e "$out" ]; then
+    echo "output file already exists: $out" >&2
+    return 1
+  fi
+
+  script -q "${out}" ssh "${lvl}@${host}" -p "${port}"
 }
 
 redact() {
