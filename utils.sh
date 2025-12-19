@@ -2,7 +2,8 @@
 
 begin() {
   lvl="$1"
-  [ -n "$lvl" ] || { echo "usage: login <banditN>"; return 2; }
+  key="${2:-}"
+  [ -n "$lvl" ] || { echo "usage: begin <banditN> [ssh_key]"; return 2; }
 
   host="bandit.labs.overthewire.org"
   port=2220
@@ -13,7 +14,12 @@ begin() {
     return 1
   fi
 
-  script -q "${out}" ssh "${lvl}@${host}" -p "${port}"
+  if [ -n "$key" ] && [ "$key" != "-" ]; then
+    [ -f "$key" ] || { echo "missing ssh key: $key" >&2; return 2; }
+    script -q "$out" ssh -i "$key" "${lvl}@${host}" -p "$port"
+  else
+    script -q "$out" ssh "${lvl}@${host}" -p "$port"
+  fi
 }
 
 redact() {
