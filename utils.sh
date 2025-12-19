@@ -1,6 +1,6 @@
 # usage: source ./utils.sh
 
-begin() {
+sshpw() {
   lvl="$1"
   [ -n "$lvl" ] || { echo "usage: login <banditN>"; return 2; }
 
